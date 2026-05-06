@@ -1,10 +1,10 @@
-const express = require('express');
-const { Pool } = require('pg');
+import express, { json } from 'express';
+import { Pool } from 'pg';
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.use(json());
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 

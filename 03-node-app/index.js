@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,3 +17,4 @@ const server = app.listen(port, () => {
 
 // Node som PID 1 i en container videresender ikke SIGTERM automatisk
 process.on('SIGTERM', () => server.close(() => process.exit(0)));
+process.on('SIGINT', () => server.close(() => process.exit(0)));

@@ -1,10 +1,10 @@
-const express = require('express');
-const { Pool } = require('pg');
+import express, { json } from 'express';
+import { Pool } from 'pg';
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.use(json());
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -35,6 +35,11 @@ app.post('/messages', async (req, res) => {
 });
 
 init().then(() => {
+  const server = app.listen(port, () => console.log(`Server kjører på port ${port}`));
+  // Node som PID 1 i en container videresender ikke SIGTERM automatisk
+  process.on('SIGTERM', () => server.close(() => process.exit(0)));
+});
+then(() => {
   const server = app.listen(port, () => console.log(`Server kjører på port ${port}`));
   // Node som PID 1 i en container videresender ikke SIGTERM automatisk
   process.on('SIGTERM', () => server.close(() => process.exit(0)));
