@@ -1,0 +1,12 @@
+services:
+  app:
+    build: ./app
+    ports:
+      - "3000:3000"
+    # Appen starter ikke før Redis er oppe
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    # Ingen eksponerte porter – Redis er kun tilgjengelig internt i nettverket

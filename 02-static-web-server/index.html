@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docker 101 – Statisk webserver</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #0d1117;
+      color: #e6edf3;
+    }
+    .kort {
+      text-align: center;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 2rem 3rem;
+      background: #161b22;
+    }
+    h1 { color: #58a6ff; }
+    code {
+      background: #0d1117;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="kort">
+    <h1>Hei fra Docker!</h1>
+    <p>Denne siden blir servert av <strong>Nginx</strong> inne i en Docker-container.</p>
+    <p>Image: <code>nginx:alpine</code></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      # Kun frontend er eksponert utad – alt går gjennom Nginx
+      # Port 8080 på host mappes til port 80 i containeren (rootless podman tillater ikke port < 1024)
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    # Ingen eksponerte porter – backend er kun tilgjengelig internt via frontend-proxyen
+    environment:
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
